@@ -8,7 +8,7 @@ const connectDatabase = () => {
       "mongodb+srv://root:root@cluster0.lmamrfm.mongodb.net/?retryWrites=true&w=majority",
       { useNewUrlParser: true, useUnifiedTopology: true }
     )
-    .then(() => console.log("Mongo DBAtlas connected"))
+    .then(() => console.log("MongoDB Atlas connected"))
     .catch((error) => {
       console.log(error);
     });
