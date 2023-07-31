@@ -1,4 +1,5 @@
 const calcService = require("../services/calc.service");
+const mongoose = require("mongoose");
 
 const calculateSolarPanelQuantity = (energy) => {
   return Math.ceil(parseInt(energy) / 550);
@@ -68,6 +69,10 @@ const read = async (req, res) => {
 
 const readById = async (req, res) => {
   const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send({ message: "invalid Id" });
+  }
 
   const data = await calcService.readById(id);
 
