@@ -1,6 +1,7 @@
 {
   "name": "back_solar_energy",
   "version": "1.0.0",
+  "type": "module",
   "description": "API  for SPA Solar Energy",
   "main": "index.js",
   "scripts": {

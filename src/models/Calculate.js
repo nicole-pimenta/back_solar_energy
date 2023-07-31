@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const CalculateSchema = new mongoose.Schema({
   energy: { type: Number, required: true },
@@ -8,4 +8,4 @@ const CalculateSchema = new mongoose.Schema({
 
 const Calculate = mongoose.model("Calculate", CalculateSchema);
 
-module.exports = Calculate;
+export default Calculate;

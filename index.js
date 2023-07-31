@@ -1,11 +1,13 @@
-const express = require("express");
+import express from "express";
+import connectDatabase from "./src/database/db.js";
+import calcRoute from "./src/routes/calc.router.js";
+
 const app = express();
-const connectDatabase = require("./src/database/db");
-const calcRoute = require("./src/routes/calc.route");
 app.use(express.json());
+
 connectDatabase();
 
 app.use("/calculo", calcRoute);
 
-const port = 3000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

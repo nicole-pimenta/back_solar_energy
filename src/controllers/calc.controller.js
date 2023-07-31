@@ -1,4 +1,4 @@
-const calcService = require("../services/calc.service");
+import calcService from "../services/calc.service.js";
 
 const calculateSolarPanelQuantity = (energy) => {
   return Math.ceil(parseInt(energy) / 550);
@@ -52,34 +52,38 @@ const create = async (req, res) => {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message });
     }
-    return res.status(500).json({ message: error });
+    return res.status(500).json({ message: error.message });
   }
 };
 
 const read = async (req, res) => {
-  const data = await calcService.read();
+  try {
+    const data = await calcService.read();
 
-  if (data.length === 0) {
-    return res.status(400).send({ message: "There are no registered data" });
+    if (data.length === 0) {
+      return res.status(400).send({ message: "There are no registered data" });
+    }
+
+    res.status(200).send(data);
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(400).json({ message: error.message });
+    }
+    return res.status(500).json({ message: error.message });
   }
-
-  res.status(200).send(data);
 };
 
 const readById = async (req, res) => {
-  const { id } = req.params;
-
-  // if (!mongoose.Types.ObjectId.isValid(id)) {
-  //   return res.status(400).send({ message: "invalid Id" });
-  // }
-
-  const data = await calcService.readById(id);
-
-  // if (!data) {
-  //   return res.status(400).send("Data not found");
-  // }
-
-  res.status(200).send(data);
+  try {
+    const { id } = req.params;
+    const data = await calcService.readById(id);
+    res.status(200).send(data);
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(400).json({ message: error.message });
+    }
+    return res.status(500).json({ message: error.message });
+  }
 };
 
-module.exports = { create, read, readById };
+export default { create, read, readById };

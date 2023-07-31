@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const isValidId = (req, res, next) => {
   const { id } = req.params;
@@ -10,4 +10,4 @@ const isValidId = (req, res, next) => {
   next();
 };
 
-module.exports = { isValidId };
+export default isValidId;
