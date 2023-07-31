@@ -1,8 +1,10 @@
 const express = require("express");
+const calcRoute = require("./src/routes/calc.route");
+
 const app = express();
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
+app.use("/calculo", calcRoute);
 
-app.listen(3000);
+const port = 3000;
+app.listen(port, () => console.log(`Server running on port ${port}`));
