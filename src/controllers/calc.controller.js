@@ -1,12 +1,5 @@
 const calcService = require("../services/calc.service");
 
-// const getNextId = () => {
-//   const lastItem = database.sort((a, b) => a.id - b.id).at(-1);
-
-//   if (!lastItem) return 1;
-//   return lastItem.id + 1;
-// };
-
 const calculateSolarPanelQuantity = (energy) => {
   return Math.ceil(parseInt(energy) / 550);
 };
@@ -33,9 +26,9 @@ const create = async (req, res) => {
 
     const calculate = await calcService.create(req.body);
 
-    if (!calculate) {
-      return res.status(400).send({ message: "error " });
-    }
+    // if (!calculate) {
+    //   return res.status(400).send({ message: "error " });
+    // }
 
     const solarPanelQuantity = calculateSolarPanelQuantity(energy);
 
@@ -63,8 +56,14 @@ const create = async (req, res) => {
   }
 };
 
-const read = (req, res) => {
-  res.send("leituraaaa");
+const read = async (req, res) => {
+  const data = await calcService.read();
+
+  if (data.length === 0) {
+    return res.status(400).send({ message: "There are no registered data" });
+  }
+
+  res.status(200).send(data);
 };
 
 const readById = (req, res) => {
