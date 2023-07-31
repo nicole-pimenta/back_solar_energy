@@ -4,13 +4,13 @@ const connectDatabase = () => {
   console.log("Wait connecting to database..");
 
   mongoose
-    .connect(
-      "mongodb+srv://root:root@cluster0.lmamrfm.mongodb.net/?retryWrites=true&w=majority",
-      { useNewUrlParser: true, useUnifiedTopology: true }
-    )
+    .connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
     .then(() => console.log("MongoDB Atlas connected"))
     .catch((error) => {
-      console.log(error);
+      console.log(`Error connecting to MongoDB Atlas ${error}`);
     });
 };
 
