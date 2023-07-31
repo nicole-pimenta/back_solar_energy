@@ -66,8 +66,16 @@ const read = async (req, res) => {
   res.status(200).send(data);
 };
 
-const readById = (req, res) => {
-  res.send("read by id");
+const readById = async (req, res) => {
+  const { id } = req.params;
+
+  const data = await calcService.readById(id);
+
+  if (!data) {
+    return res.status(400).send("Data not found");
+  }
+
+  res.status(200).send(data);
 };
 
 module.exports = { create, read, readById };
