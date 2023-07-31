@@ -6,6 +6,6 @@ const CalculateSchema = new mongoose.Schema({
   height: { type: Number, required: true },
 });
 
-const Calculate = mongoose.Schema("Calculate", CalculateSchema);
+const Calculate = mongoose.model("Calculate", CalculateSchema);
 
 module.exports = Calculate;

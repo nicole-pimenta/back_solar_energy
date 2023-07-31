@@ -1,11 +1,11 @@
-const database = [];
+const calcService = require("../services/calc.service");
 
-const getNextId = () => {
-  const lastItem = database.sort((a, b) => a.id - b.id).at(-1);
+// const getNextId = () => {
+//   const lastItem = database.sort((a, b) => a.id - b.id).at(-1);
 
-  if (!lastItem) return 1;
-  return lastItem.id + 1;
-};
+//   if (!lastItem) return 1;
+//   return lastItem.id + 1;
+// };
 
 const calculateSolarPanelQuantity = (energy) => {
   return Math.ceil(parseInt(energy) / 550);
@@ -23,12 +23,18 @@ const availableTotalArea = (width, height) => {
   return Number((Number(width) * Number(height)).toFixed(2));
 };
 
-const create = (req, res) => {
+const create = async (req, res) => {
   try {
     const { energy, width, height } = req.body;
 
     if (!energy || !width || !height) {
       res.status(400).send({ error: "Submit all fields for registration" });
+    }
+
+    const calculate = await calcService.create(req.body);
+
+    if (!calculate) {
+      return res.status(400).send({ message: "error " });
     }
 
     const solarPanelQuantity = calculateSolarPanelQuantity(energy);
@@ -41,16 +47,14 @@ const create = (req, res) => {
     const availableArea = availableTotalArea(width, height);
 
     const solarSystemData = {
-      id: getNextId(),
+      id: calculate._id,
       solarPanelQuantity,
       microinverterQuantity,
       solarPanelLength,
       availableArea,
     };
 
-    // database.push(solarSystemData);
-
-    return res.status(201).json({ message: "Calc created successfully" });
+    return res.status(201).json(solarSystemData);
   } catch (error) {
     if (error instanceof Error) {
       return res.status(400).json({ message: error.message });

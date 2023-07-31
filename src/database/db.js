@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const connectDatabase = () => {
-  console.log("Wait connecting to database");
+  console.log("Wait connecting to database..");
 
   mongoose
     .connect(
